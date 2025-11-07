@@ -75,3 +75,9 @@ group :production do
 end
 
 gem 'devise'
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'faker'
+  gem 'factory_bot_rails'
+end

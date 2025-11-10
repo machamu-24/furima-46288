@@ -1,4 +1,7 @@
 class Item < ApplicationRecord
+
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
   belongs_to :user
   has_one_attached :image
 
@@ -14,7 +17,6 @@ class Item < ApplicationRecord
     validates :image
     validates :name
     validates :description
-    validates :price
     validates :category_id
     validates :condition_id
     validates :shipping_fee_status_id
@@ -30,11 +32,23 @@ class Item < ApplicationRecord
     validates :prefecture_id
   end
 
+  validates :price, presence: true
+  validate  :price_must_be_half_width_digits
   validates :price,
             numericality: {
               only_integer: true,
               greater_than_or_equal_to: 300,
               less_than_or_equal_to: 9_999_999
             },
-            format: { with: /\A[0-9]+\z/, message: '半角数字で入力してください' }
+            if: -> { price_before_type_cast.to_s.match?(/\A[0-9]+\z/) }
+
+  private
+
+  def price_must_be_half_width_digits
+    raw = price_before_type_cast
+    return if raw.nil? || raw.to_s == '' # presence: true handles blank
+    return if raw.to_s.match?(/\A[0-9]+\z/)
+
+    errors.add(:price, 'は半角数字で入力してください')
+  end
 end

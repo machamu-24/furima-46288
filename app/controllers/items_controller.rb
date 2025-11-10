@@ -1,5 +1,6 @@
 # app/controllers/items_controller.rb
 class ItemsController < ApplicationController
+  # ログインしていないと　new/createにアクセスできない
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
@@ -21,6 +22,7 @@ class ItemsController < ApplicationController
 
   private
 
+  # ストロングパラメータ
   def item_params
     params.require(:item).permit(
       :name, :description, :category_id, :condition_id, :shipping_fee_status_id,

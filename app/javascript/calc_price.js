@@ -1,5 +1,6 @@
 // app/javascript/calc_price.js
 document.addEventListener('turbo:load', setup);
+document.addEventListener('turbo:render', setup);
 document.addEventListener('DOMContentLoaded', setup);
 
 function setup() {

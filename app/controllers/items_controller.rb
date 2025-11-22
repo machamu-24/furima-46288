@@ -3,7 +3,9 @@ class ItemsController < ApplicationController
   # ログインしていないと　new/createにアクセスできない
   before_action :authenticate_user!, only: [:new, :create]
 
-
+  def index
+    @items = Item.order(created_at: :desc)
+  end
 
   def new
     @item = Item.new

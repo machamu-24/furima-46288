@@ -28,7 +28,7 @@ class ItemsController < ApplicationController
   end
   
   def update
-    if @item.@update(item_params)
+    if @item.update(item_params)
       redirect_to item_path(@item), notice: '商品の情報を更新しました'
     else
       render :edit, status: :unprocessable_entity

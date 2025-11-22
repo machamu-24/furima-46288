@@ -1,7 +1,8 @@
 # app/controllers/items_controller.rb
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show]
+  before_action :set_item, only: [:show, :edit, :update]
+  before_action :move_to_index, only: [:edit, :update]
 
   def index
     @items = Item.order(created_at: :desc)
@@ -23,6 +24,17 @@ class ItemsController < ApplicationController
   def show
   end
 
+  def edit
+  end
+  
+  def update
+    if @item.@update(item_params)
+      redirect_to item_path(@item), notice: '商品の情報を更新しました'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   # ストロングパラメータ
@@ -36,4 +48,9 @@ class ItemsController < ApplicationController
   def set_item
     @item = Item.find(params[:id])
   end
+
+  def move_to_index
+    redirect_to root_path unless current_user == @item.user
+  end
+
 end

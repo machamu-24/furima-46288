@@ -83,3 +83,5 @@ group :development, :test do
 end
 
 gem 'active_hash'
+
+gem 'pry-rails'

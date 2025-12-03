@@ -127,9 +127,9 @@
                 <%= image_tag url_for(item.image), class: "item-img" %>
 
                 <%# 商品が売れていればsold outを表示しましょう %>
-                <%# if item.order.present? %>
-                <%# <div class='sold-out'><span>Sold Out!!</span></div> %>
-                <%# end %>
+                <% if item.order.present? %>
+                <div class='sold-out'><span>Sold Out!!</span></div>
+                <% end %>
                 <%# //商品が売れていればsold outを表示しましょう %>
               </div>
               <div class='item-info'>

@@ -32,19 +32,11 @@ class OrdersController < ApplicationController
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
-
-    begin
       Payjp::Charge.create(
         amount: @item.price,
         card: order_params[:token],
         currency: 'jpy'
       )
-    rescue Payjp::APIConnectionError, OpenSSL::SSL::SSLError => e
-      
-      Rails.logger.error "PAY.JP connection error: #{e.class} #{e.message}"
-      
-    end
-
   end
 
   def move_to_root

@@ -85,3 +85,5 @@ end
 gem 'active_hash'
 
 gem 'pry-rails'
+
+gem "payjp", "~> 1.1"

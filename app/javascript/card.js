@@ -1,5 +1,8 @@
 const pay = () => {
     const publicKey = gon.public_key
+    const form = document.getElementById('charge-form')
+    if (!form) return
+
     const payjp = Payjp(publicKey) // PAY.JPテスト公開鍵
     const elements = payjp.elements();
     const numberElement = elements.create('cardNumber');
@@ -10,7 +13,6 @@ const pay = () => {
     expiryElement.mount('#expiry-form');
     cvcElement.mount('#cvc-form');
 
-    const form = document.getElementById('charge-form')
     form.addEventListener("submit", (e) => {
         payjp.createToken(numberElement).then(function (response) {
             if (response.error) {

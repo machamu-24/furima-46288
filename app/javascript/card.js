@@ -1,7 +1,15 @@
 const pay = () => {
-    const publicKey = gon.public_key
+    const publicKey = gon?.public_key
     const form = document.getElementById('charge-form')
-    if (!form) return
+    if (!form || !publicKey) return
+
+    const numberForm = document.getElementById('number-form')
+    const expiryForm = document.getElementById('expiry-form')
+    const cvcForm = document.getElementById('cvc-form')
+    if (!numberForm || !expiryForm || !cvcForm) return
+    numberForm.innerHTML = ''
+    expiryForm.innerHTML = ''
+    cvcForm.innerHTML = ''
 
     const payjp = Payjp(publicKey) // PAY.JPテスト公開鍵
     const elements = payjp.elements();
@@ -14,8 +22,10 @@ const pay = () => {
     cvcElement.mount('#cvc-form');
 
     form.addEventListener("submit", (e) => {
+        e.preventDefault();
         payjp.createToken(numberElement).then(function (response) {
             if (response.error) {
+                console.error(response.error.message)
             } else {
                 const token = response.id;
                 const renderDom = document.getElementById("charge-form");
@@ -27,7 +37,6 @@ const pay = () => {
             cvcElement.clear();
             document.getElementById("charge-form").submit();
         });
-        e.preventDefault();
     });
 };
 

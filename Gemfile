@@ -89,3 +89,7 @@ gem 'pry-rails'
 gem "payjp", "~> 1.1"
 
 gem "gon", "~> 6.6"
+
+group :production do
+  gem 'pg'
+end
